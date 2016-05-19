@@ -3,7 +3,7 @@
  *Created by: Won Yong Ha *
  *Created on: 5/17/2016 *
  *Last Modified by: Won Yong Ha *
- *Last Modified on: 5/17/2016 *
+ *Last Modified on: 5/19/2016 *
  */
 
 #include <stdio.h>
@@ -19,7 +19,7 @@ int isPrime(int x) {
   int count = 2;
 
   //start a first while loop
-  while (count != x) {
+  while (count < x) {
     //x mod count 0 min x can be dividable.
     if (x % count == 0)
       //return 0 -> not prime
@@ -39,24 +39,21 @@ int main() {
   // storing value
   int value;
 
-  //start infinite while loop for keep asking the number
-  while(1) {
-    //print the question and receive the number
-    printf("Enter a number to check if it is a prime number:\n\n");
-    //scan the number and store in value
-    scanf("%d", &value); //store to value
-
-    //extra line for convinient
-    printf("\n");
-    
-    //check the prime
-    if(isPrime(value))
-      //prime -> print
-      printf("The number %d is a prime number.\n\n", value);
-    else {
-      //not prime -> print
-      printf("The number %d is not a prime number.\n\n", value);
-      return 0; //break the while loop and finish the function
-    }
-  }
+  //print the question and receive the number
+  printf("Enter a number (no letters) to check if it is a prime number (10 digits or less):\n\n");
+  //scan the number and store in value
+  scanf("%d", &value); //store to value
+  
+  //extra line for convinient
+  printf("\n");
+  
+  //check the prime
+  if(isPrime(value))
+    //prime -> print
+    printf("The number %d is a prime number.\n\n", value);
+  else
+    //not prime -> print
+    printf("The number %d is not a prime number.\n\n", value);
+  //Finish function
+  return 0;
 }
