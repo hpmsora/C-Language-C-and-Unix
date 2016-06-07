@@ -1,0 +1,29 @@
+#include <stdio.h>
+
+/*printStatement Function*/
+void printStatement() {
+
+  printf("\t\tMain Menu\n");
+  printf("\t\t---------\n");
+  printf("1. Perform Left Bit Shift Operation (one value)\n");
+  printf("2. Perform Right Bit Shift Operation (one value)\n");
+  printf("3. Perform Binary AND Operation (two values)\n");
+  printf("4. Perform Binary OR Operation (two values)\n");
+  printf("5. Perform Binary One's Complement (~) Operation (one value)\n");
+  printf("6. Perform Binary XOR Operation (two values)\n");
+  printf("7. Quit\n");
+
+}
+
+/*Main Function*/
+int main() {
+
+  int option = 0;
+
+  while(option != 7) {
+    printStatement();
+    scanf("%d", &option);
+  }
+
+  return 0;
+}
