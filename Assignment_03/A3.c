@@ -14,6 +14,7 @@
 /*printStatement Function*/
 void printStatement() {
 
+  /*Print the questions*/
   printf("\n");
   printf("\t\tMain Menu\n");
   printf("\t\t---------\n");
@@ -132,7 +133,6 @@ void option_2_RightBit() {
   while(num != 0) {
     num_binary_temp[count] = num % 2;
     num /= 2;
-
     count++;
   }
 
@@ -297,7 +297,7 @@ void option_3_AndOpr() {
     num += num_binary[count] * (int) pow(2, 31 - count);
 
   /*Print the number*/
-  printf("  (base 10 %d)", num);
+  printf("  (base 10 %d)\n", num);
 
 }
 
@@ -417,7 +417,207 @@ void option_4_OrOpr() {
     num += num_binary[count] * (int) pow(2, 31 - count);
 
   /*Print the number*/
-  printf("  (base 10 %d)", num);
+  printf("  (base 10 %d)\n", num);
+
+}
+
+/*option_5_Complement Function*/
+void option_5_Complement() {
+
+  /*Declare variables*/
+  int num, num_origin;
+  int count = 0;
+  int PosOrNeg = 1; //1 -> Pos  0 -> Neg
+  int num_binary[32] = {0};
+  int num_binary_temp[32] = {0};
+  int num_binary_result[32] = {0};
+
+ /*Print question and get numbers*/
+  printf("\nEnter a base 10 Interger: ");
+  scanf("%d", &num);
+
+  /*Save the original number*/
+  num_origin = num;
+
+  /*num to binary*/
+  /*Check wether positive or negetive number*/
+  if(num < 0) {
+    num *= -1;
+    num++;
+    PosOrNeg = 0;
+  }
+
+  /*While loop*/
+  while(num != 0) {
+    num_binary_temp[count] = num % 2;
+    num /= 2;
+    count++;
+  }
+
+  /*for loop*/
+  /*neg check*/
+  if(PosOrNeg == 0) {
+    for(count = 0; count < 32; count++) {
+      if(num_binary_temp[count] == 0)
+	num_binary_temp[count] = 1;
+      else
+	num_binary_temp[count] = 0;
+    }
+  }
+
+  /*for loop*/
+  /*reverse array*/
+  for(count = 0; count < 32; count++)
+    num_binary[count] = num_binary_temp[31 - count];
+
+  /*Print binary*/
+  printf("\n\n\tEntered Integer: ");
+  for(count = 0; count < 32; count++)
+    printf("%d", num_binary[count]);
+  printf("  (base 10 %d)\n", num_origin);
+
+  /*for loop*/
+  /*Complement calculation*/
+  for(count = 0; count < 32; count++) {
+    if(num_binary[count] == 1)
+      num_binary_result[count] = 0;
+    else
+      num_binary_result[count] = 1;
+  }
+
+  /*Print the result*/
+  printf("\t~'ed           : ");
+  for(count = 0; count < 32; count++)
+    printf("%d", num_binary_result[count]);
+  
+  /*for loop*/
+  /*calculate result*/
+  for(count = 31; count >= 0; count--)
+    num += num_binary_result[count] * (int) pow(2, 31 - count);
+
+  /*Print the result*/
+  printf("  (base 10 %d)\n", num);
+
+}
+
+/*option_6_XOrOpr Function*/
+void option_6_XOrOpr() {
+
+  /*Declare variables*/
+  int num_1, num_2, num_origin_1, num_origin_2;
+  int num = 0;
+  int count = 0;
+  int PosOrNeg_1 = 1;  //1 -> Pos  0 -> Neg
+  int PosOrNeg_2 = 1;  //1 -> Pos  0 -> Neg
+  int num_binary[32] = {0};
+  int num_binary_1[32] = {0};
+  int num_binary_2[32] = {0};
+  int num_binary_temp_1[32] = {0};
+  int num_binary_temp_2[32] = {0};
+
+  /*Print question and get numbers*/
+  printf("\nEnter two base 10 Integers, separated by a space: ");
+  scanf("%d %d", &num_1, &num_2);
+
+  /*Save original value*/
+  num_origin_1 = num_1;
+  num_origin_2 = num_2;
+
+  /*num to binary*/
+  /*Check wether positive or negetive number*/
+  if(num_1 < 0) {
+    num_1 *= -1;
+    num_1--;
+    PosOrNeg_1 = 0;
+  }
+
+  /*Check wether positive or negetive number*/
+  if(num_2 < 0) {
+    num_2 *= -1;
+    num_2--;
+    PosOrNeg_2 = 0;
+  }
+
+  /*While loop*/
+  while(num_1 != 0) {
+    num_binary_temp_1[count] = num_1 % 2;
+    num_1 /= 2;
+    count++;
+  }
+
+  /*Reinitialize variable*/
+  count = 0;
+
+  /*While loop*/
+  while(num_2 != 0) {
+    num_binary_temp_2[count] = num_2 % 2;
+    num_2 /= 2;
+    count++;
+  }
+
+  /*for loop*/
+  /*neg check num 1*/
+  if(PosOrNeg_1 == 0) {
+    for(count = 0; count < 32; count++) {
+      if(num_binary_temp_1[count] == 0)
+	num_binary_temp_1[count] = 1;
+      else
+	num_binary_temp_1[count] = 0;
+    }
+  }
+
+  /*for loop*/
+  /*neg check num 2*/
+  if(PosOrNeg_2 == 0) {
+    for(count = 0; count < 32; count++) {
+      if(num_binary_temp_2[count] == 0)
+	num_binary_temp_2[count] = 1;
+      else
+	num_binary_temp_2[count] = 0;
+    }
+  }
+
+  /*for loop*/
+  /*reverse array*/
+  for(count = 0; count < 32; count++) {
+    num_binary_1[count] = num_binary_temp_1[31 - count];
+    num_binary_2[count] = num_binary_temp_2[31 - count];
+  }
+
+  /*Print binary num 1*/
+  printf("\n\n\tEntered Integer 1: ");
+  for(count = 0; count < 32; count++)
+    printf("%d", num_binary_1[count]);
+  printf("  (base 10 %d)\n", num_origin_1);
+
+  /*Print binary num 2*/
+  printf("\tEntered Integer 2: ");
+  for(count = 0; count < 32; count++)
+    printf("%d", num_binary_2[count]);
+  printf("  (base 10 %d)\n", num_origin_2);
+
+  /*for loop*/
+  /*Or's calculation*/
+  printf("\tXOR'ed           : ");
+  for(count = 0; count < 32; count++) {
+    if(num_binary_1[count] != num_binary_2[count])
+      num_binary[count] = 1;
+    else
+      num_binary[count] = 0;
+  }
+
+  /*for loop*/
+  /*print the binary*/
+  for(count = 0; count < 32; count++)
+    printf("%d", num_binary[count]);
+
+  /*for loop*/
+  /*calculate num*/
+  for(count = 31; count >= 0; count--)
+    num += num_binary[count] * (int) pow(2, 31 - count);
+
+  /*Print the number*/
+  printf("  (base 10 %d)\n", num);
 
 }
 
@@ -434,8 +634,10 @@ void functionOption(int op) {
     option_4_OrOpr();
   }
   else if(op == 5) {
+    option_5_Complement();
   }
   else if(op == 6) {
+    option_6_XOrOpr();
   }
 }
 
@@ -452,5 +654,6 @@ int main() {
     functionOption(option);
   }
 
+  /*Finishing the function*/
   return 0;
 }
