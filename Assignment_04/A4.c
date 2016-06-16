@@ -9,10 +9,175 @@
 /*Importing Libraries*/
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
 
 /*----------------------------------------------------------------*/
 /*Cricket*/
+
+/*Linked List structure type*/
+/*Structure declaration*/
+/*team_t*/
+typedef struct team {
+  char teamName[99];
+  char memberInfo_name[11][99];
+  float avg[11];
+  int memSize;
+  struct team* next;
+} team_t;
+
+/*Prototype Function*/
+void printMember(team_t* teams);
+void memberInfo(team_t* teams, int num);
+void namingTeam(team_t* teams, int num);
+void Cricket();
+
+/*namingTeam Function*/
+void namingTeam(team_t* teams, int num) {
+
+  /*Declare variables*/
+  char name[99];
+  team_t* current = teams;
+
+  /*while loop*/
+  /*Getting the name of team(s)*/
+  while(num != 0) {
+
+    /*Print the question*/
+    printf("Enter the name(s) of the teams: ");
+    scanf("%s", &name); //getting name
+
+    /*if statement*/
+    /*Check the size of list*/
+    if(num == 1) {
+      /*Insert the name*/
+      strcpy(current->teamName, name);
+      current->memSize = 0; //initialize the size
+      num--;
+    }
+    else {
+      /*Insert the name*/
+      strcpy(current->teamName, name); //insert the name;
+      current->memSize = 0; //initialize the size;
+      current->next = malloc(sizeof(team_t)); //initialize the next linked element
+      current = current->next;
+      current->next = NULL; //initialize the next element
+      num--;
+    }
+  }
+
+  /*Organization gap line*/
+  printf("\n");
+
+}
+
+/*memberInfo function*/
+void memberInfo(team_t* teams, int num) {
+
+  /*Declare variables*/
+  char member_Name[99];
+  char team_Name[99];
+  int pos = 0, count = 1;
+  float b_avg;
+  team_t* current = teams;
+
+  /*while loop*/
+  /*Inserting the member information*/
+  while(count <= num) {
+
+    /*Print the question*/
+    printf("Enter the %d Player name, Team name, and batting average: ", count);
+    scanf("%s %s %f", &member_Name, &team_Name, &b_avg); //getting answer
+
+    /*while loop*/
+    /*Checking the team*/
+    while(current != NULL) {
+
+      /*if statement*/
+      if(strcmp(current->teamName, team_Name) == 0) {
+
+	/*Store variables*/
+	pos = current->memSize;
+	strcpy(current->memberInfo_name[pos], member_Name); //save name
+	current->avg[pos] = b_avg; //store average
+	
+	/*Member size increase*/
+	pos++;
+	current->memSize = pos;
+
+	break; //break the while loop
+      }
+
+      /*Next team*/
+      current = current->next;
+    }
+
+    /*Increase the count*/
+    count++;
+
+    /*Reinitialize the current*/
+    current = teams;
+  }
+
+  /*Organize gap line*/
+  printf("\n\n");
+
+}
+
+/*printMemeber Function*/
+void printMember(team_t* teams) {
+
+  /*Declare variables*/
+  int mSize = 0, count;
+  team_t* current = teams;
+
+  /*Print the statement*/
+  printf("Listing of player and batting average according to team names::\n");
+
+  /*while loop*/
+  while(current != NULL) {
+    printf("%s-\n", current->teamName);
+    mSize = current->memSize; //initialize the mSize
+    count = 0; //initialize the count
+    /*while loop*/
+    while(count < mSize) {
+      printf("\t%s\t%f\n", current->memberInfo_name[count], current->avg[count]);
+      count++;
+    }
+
+    /*Orgnaize gap line*/
+    printf("\n");
+
+    /*Next team*/
+    current = current->next;
+  }
+
+}
+
+/*Cricket Function*/
+void Cricket() {
+
+  /*Declare variable*/
+  int num_teams, num_players;
+  team_t* realTeams = malloc(sizeof(team_t));
+
+  /*Print the question*/
+  printf("Enter the number of teams you with to record: ");
+  scanf("%d", &num_teams); //getting value
+
+  /*Getting name of teams*/
+  namingTeam(realTeams, num_teams);
+
+  /*Print the question*/
+  printf("Enter the TOTAL number of players for all teams: ");
+  scanf("%d", &num_players);
+
+  /*Getting member infomation*/
+  memberInfo(realTeams, num_players);
+
+  /*Print the teams*/
+  printMember(realTeams);
+
+}
 
 
 /*----------------------------------------------------------------*/
@@ -407,8 +572,8 @@ int main() {
   while((option != 1) && (option != 2)) {
     mainMenu();
     scanf("%d", &option);
-    if(option == 1) {
-    }
+    if(option == 1)
+      Cricket();
     else if(option == 2)
       LinkedList();
     else
